@@ -21,19 +21,44 @@
 // </form>
 
 
-const name = document.getElementById('name')
+const input = document.getElementById('name')
 const email = document.getElementById('email')
 const password = document.getElementById('password')
 const submit = document.getElementById('submit-btn')
 
 
+
+
 function validate(){
 
-    let validate =true;
-
-    if (name.value.length<2) {
-        validate= false;
-
+    let valid =true;
+    
+    if (input.value.length<2) {
+        document.getElementById('name-error').textContent='name too short'
+        valid=false;
+    }else{
+        document.getElementById('name-error').textContent=''
     }
 
+    const emailRegex= /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+    if (!emailRegex.test(email.value)) {
+        document.getElementById('email-error').textContent='Incorrect email'
+        valid=false;
+    } else {
+        document.getElementById('email-error').textContent=''
+    }
+
+    if (password.value.length<8) {
+        document.getElementById('password-error').textContent='Password too short'
+        valid=false;
+    }else{
+        document.getElementById('password-error').textContent=''
+
+    }
+    submit.disabled = !valid;
+    return valid;
 }
+
+input.addEventListener('input',validate)
+email.addEventListener('input',validate)
+password.addEventListener('input',validate)
